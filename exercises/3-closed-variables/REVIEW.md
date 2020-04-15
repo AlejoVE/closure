@@ -2,7 +2,7 @@
 
 ## /3-closed-variables
 
-> no status: 4/15/2020, 18:46:18 
+> no status: 4/15/2020, 21:36:08 
 
 [../REVIEW.md](../REVIEW.md)
 
@@ -107,7 +107,8 @@ closure1("second call to closure1");
 
 ```js
 const usesParentVariable = (param) => {
-  // write me!
+  let parent = param + parentScopeVariable + "local";
+  return parent;
 };
 
 let parentScopeVariable = "parentScope";
@@ -119,13 +120,13 @@ const result2 = usesParentVariable(undefined);
 console.assert(result2 === "undefinedparentScopelocal", "assert 2");
 
 parentScopeVariable = usesParentVariable("spoon");
-console.assert(parentScopeVariable === _, "assert 3");
+console.assert(parentScopeVariable === "spoonparentScopelocal", "assert 3");
 
-const result3 = usesParentVariable(_);
+const result3 = usesParentVariable("");
 console.assert(result3 === "spoonparentScopelocallocal", "assert 4");
 
 parentScopeVariable = usesParentVariable("spoon");
-console.assert(parentScopeVariable === _, "assert 5");
+console.assert(parentScopeVariable === "spoonspoonparentScopelocallocal", "assert 5");
 
 ```
 
@@ -140,7 +141,9 @@ console.assert(parentScopeVariable === _, "assert 5");
 
 ```js
 const closesParentParamter = (parentParam) => {
-  // write me!
+  return function (word) {
+    return  word.split("").join(parentParam).trim();
+  }
 };
 
 const closure1 = closesParentParamter("|");
@@ -152,20 +155,19 @@ console.assert(result1 === "+|(|=|)|+", "assert 1");
 const result2 = closure2("+(=)+");
 console.assert(result2 === "+~(~=~)~+", "assert 2");
 
-const result3 = closure1("abc");
-console.assert(result3 === _, "assert 3");
+ const result3 = closure1("abc");
+console.assert(result3 === "a|b|c", "assert 3");
 
 const result4 = closure2("xyz");
-console.assert(result4 === _, "assert 4");
+console.assert(result4 === "x~y~z", "assert 4");
 
-
-const closure3 = closesParentParamter(_);
-const result5 = closure3(_);
+ const closure3 = closesParentParamter("--");
+const result5 = closure3(" 01 ");
 console.assert(result5 === "--0--1--", "assert 5");
 
-const closure4 = closesParentParamter(_);
-const result6 = closure4(_);
-console.assert(result6 === "--1--0--", "assert 6");
+ const closure4 = closesParentParamter("--");
+const result6 = closure4(" 10 ");
+console.assert(result6 === "--1--0--", "assert 6"); 
 
 ```
 
