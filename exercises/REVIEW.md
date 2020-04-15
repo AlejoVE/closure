@@ -2,7 +2,7 @@
 
 ## /exercises
 
-> no status: 4/15/2020, 18:44:15 
+> no status: 4/15/2020, 18:46:18 
 
 * [/1-identifying-closure](./1-identifying-closure/REVIEW.md) - no status
   * [/example-1-returning-functions.js](./1-identifying-closure/REVIEW.md#example-1-returning-functionsjs) - example - no status
